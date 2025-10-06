@@ -1,0 +1,24 @@
+<h1>Gestión de Inventario</h1>
+
+<div id="agregar-producto">
+  <h2>Añadir Nuevo Producto</h2>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Nombre del Producto:</mat-label>
+      <input matInput type="text" id="nombre" name="nombre" required [formControlName]="'name'">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>SKU/Referencia:</mat-label>
+      <input matInput type="text" id="sku" name="sku" required [formControlName]="'sku'">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Cantidad:</mat-label>
+      <input matInput type="number" id="cantidad" name="cantidad" min="0" required [formControlName]="'qty'">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Precio Unitario ($CLP):</mat-label>
+      <input matInput type="number" id="precio" name="precio" step="0.01" min="0" required [formControlName]="'price'">
+    </mat-form-field>
+    <button mat-button type="submit" class="btn">Guardar Producto</button>
+  </form>
+</div>
