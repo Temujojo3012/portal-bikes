@@ -5,12 +5,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-form',
+  selector: 'app-form-products',
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './form.html',
-  styleUrl: './form.scss'
+  templateUrl: './form-products.html',
+  styleUrl: './form-products.scss'
 })
-export class Form implements OnInit{
+export class FormProducts implements OnInit{
   public form!: FormGroup
 
   constructor(
