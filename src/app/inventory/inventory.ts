@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-inventory',
@@ -8,26 +10,29 @@ import { MatTableModule } from '@angular/material/table';
   templateUrl: './inventory.html',
   styleUrl: './inventory.scss'
 })
-export class Inventory {
+export class Inventory implements OnInit {
 
-  public dataSource = [{
-    sku: 'SKU-001',
-    name: 'Monitor LED 27"',
-    qty: 1,
-    price: 189990,
-  },
-  {
-    sku: 'SKU-002',
-    name: 'Teclado mecánico RGB"',
-    qty: 2,
-    price: 75990,
-  },
-  {
-    sku: 'SKU-003',
-    name: 'Mouse inalámbrico"',
-    qty: 2,
-    price: 25990,
-  }];
+  public dataSource!: any;
+
+  constructor(
+    private firestroe: Firestore
+  ) { }
+
+  ngOnInit(): void {
+    this.getItems()
+      .subscribe(
+        {
+          next: (data: Array<any>) => {
+            data.sort((a, b) => a.sku - b.sku);
+            this.dataSource = data;
+          }
+        });
+  }
+
+  getItems(): Observable<any> {
+    const itemsCollection = collection(this.firestroe, 'products');
+    return collectionData(itemsCollection, {}) as Observable<any>
+  }
 
   public displayedColumms = ['SKU', 'name', 'stock', 'price', 'tvalue', 'actions'];
 
