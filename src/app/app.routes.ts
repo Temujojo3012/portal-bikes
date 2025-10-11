@@ -3,6 +3,8 @@ import { Home } from './home/home';
 import { ErrorPage } from './error-page/error-page';
 import { Login } from './login/login';
 import { authGuard } from './guard/auth-guard';
+import { Bill } from './bill/bill';
+import { NewOrder } from './new-order/new-order';
 
 export const routes: Routes = [
     {
@@ -13,6 +15,14 @@ export const routes: Routes = [
     {
         path: 'login',
         component: Login
+    },
+    {
+        path: 'new-order',
+        component: NewOrder
+    },
+    {
+        path: 'bill',
+        component: Bill
     },
     {
         path: '**',
