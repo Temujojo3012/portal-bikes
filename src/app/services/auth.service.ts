@@ -1,19 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, UserCredential } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, user, UserCredential } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { from, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(
-    private auth: Auth
-  ) { }
 
-  loginWitgGoogle(): Observable<UserCredential> {
-    const provider = new GoogleAuthProvider();
-    const promise = signInWithPopup(this.auth, provider);
-    return from(promise);
+  private user$!: any;
+
+  constructor(
+    private auth: Auth,
+    private router: Router
+  ) {
+    this.user$ = user(this.auth)
+      .pipe(
+        map((user: any) => {
+          if (!user) {
+            this.router.navigate(['/login'])
+          }
+        })
+      )
+
+      this.user$.subscribe();
   }
 
   signInWithEmailAndPassword(email: string, password: string): Observable<UserCredential> {

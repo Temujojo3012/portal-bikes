@@ -3,13 +3,21 @@ import { FormGroup, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
-import { map, Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { map } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { Auth, user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule],
+  imports: [
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -17,42 +25,25 @@ export class Login implements OnInit {
 
   public form!: FormGroup;
 
-  //Todo: Mover la comprovacion del login al componente principal
-  user$!: Observable<any>;
-
   constructor(
     private formBuilder: FormBuilder,
-    private auth: Auth,
-    private router: Router
+    private authService: AuthService,
+    private router: Router,
+    private auth: Auth
   ) { }
 
   ngOnInit(): void {
     this.buildForm();
-    this.user$ = user(this.auth)
-
-    this.user$.pipe(
+    user(this.auth).pipe(
       map((data: any) => {
         if (data) {
-          //this.router.navigate(['/']);
-          return true;
+          this.router.navigate(['/']);
+          return true
         } else {
-          this.router.navigate(['/login']);
-          return false;
+          return false
         }
       })
-    ).subscribe(
-      {
-        next: (data: any) => {
-          console.log(data)
-        },
-        error: (err) => {
-          console.error(err);
-        },
-        complete: () => {
-          console.log()
-        }
-      }
-    )
+    ).subscribe()
   }
 
   private buildForm(): void {
@@ -63,15 +54,23 @@ export class Login implements OnInit {
   }
 
   public signUp(): void {
-    createUserWithEmailAndPassword(this.auth, this.form.controls['username'].value, this.form.controls['password'].value)
+    const formValues = this.form.value;
+    this.authService.createUserWithEmailAndPassword(formValues.username, formValues.password);
   }
 
   public logIn(): void {
-    signInWithEmailAndPassword(this.auth, this.form.controls['username'].value, this.form.controls['password'].value)
-  }
-
-  public logOut() {
-    signOut(this.auth)
+    const formValues = this.form.value
+    this.authService.signInWithEmailAndPassword(formValues.username, formValues.password)
+      .pipe(
+        map((user: any) => {
+          if (user) {
+            this.router.navigate(['/'])
+            return true;
+          } else {
+            return false
+          }
+        })
+      ).subscribe()
   }
 }
 
