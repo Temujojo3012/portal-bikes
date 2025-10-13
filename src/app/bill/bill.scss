@@ -1,0 +1,81 @@
+.sectionBill {
+    margin: 10px;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+
+    .head {
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+            text-align: center;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            info {
+                width: 350px;
+            }
+
+            img {
+                width: 300px;
+            }
+        }
+    }
+
+    .infoClient {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
+
+    .detailsService {
+        margin: 10px;
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+
+            td,
+            th,
+            tr {
+                text-align: center;
+            }
+
+            th{
+                background-color: lightseagreen;
+            }
+        }
+
+        .table {
+            //box-shadow: 1px 1px 5px black;
+            border: 1px solid black
+        }
+    }
+
+    .sign {
+        margin: 40px 0;
+    }
+}
+
+@media print {
+
+    /* Oculta completamente el elemento con la clase 'no-print' */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Opcional: También podrías ocultar otros elementos como barras de navegación 
+    header,
+    footer,
+    nav {
+        display: none;
+    }*/
+}
