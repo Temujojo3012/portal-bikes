@@ -48,19 +48,19 @@ export class Login implements OnInit {
 
   private buildForm(): void {
     this.form = this.formBuilder.group({
-      username: '',
+      email: '',
       password: ''
     })
   }
 
   public signUp(): void {
     const formValues = this.form.value;
-    this.authService.createUserWithEmailAndPassword(formValues.username, formValues.password);
+    this.authService.createUserWithEmailAndPassword(formValues.email, formValues.password);
   }
 
   public logIn(): void {
     const formValues = this.form.value
-    this.authService.signInWithEmailAndPassword(formValues.username, formValues.password)
+    this.authService.signInWithEmailAndPassword(formValues.email, formValues.password)
       .pipe(
         map((user: any) => {
           if (user) {

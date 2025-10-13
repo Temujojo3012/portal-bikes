@@ -64,18 +64,3 @@
         margin: 40px 0;
     }
 }
-
-@media print {
-
-    /* Oculta completamente el elemento con la clase 'no-print' */
-    .no-print {
-        display: none !important;
-    }
-
-    /* Opcional: También podrías ocultar otros elementos como barras de navegación 
-    header,
-    footer,
-    nav {
-        display: none;
-    }*/
-}
