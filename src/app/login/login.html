@@ -1,15 +1,27 @@
-<form [formGroup]="form">
-    <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input type="text" matInput placeholder="Username" [formControlName]="'username'" required>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input type="password" matInput placeholder="Password" [formControlName]="'password'" required>
-    </mat-form-field>
-    <button mat-button type="button" type="submit" (click)="logIn()">
-        <mat-icon>login</mat-icon>
-        Login
-    </button>
-    <!--<button mat-button type="button" (click)="signUp()">SignUp</button>-->
-</form>
+<div class="login">
+    <div class="left">
+        <img src="assets/images/portal_bikes.jpeg" alt="">
+    </div>
+    <div class="rigth">
+        <form [formGroup]="form">
+            <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input type="text" matInput placeholder="E-mail" [formControlName]="'email'" required>
+                @if (form.controls['email'].getError('required')) {
+                <mat-error>El campo es requerido</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Contraseña</mat-label>
+                <input type="password" matInput placeholder="Contraseña" [formControlName]="'password'" required>
+                @if (form.controls['password'].getError('required')) {
+                <mat-error>El campo es requerido</mat-error>
+                }
+            </mat-form-field>
+            <button mat-button type="button" type="submit" (click)="logIn()">
+                <mat-icon>login</mat-icon>
+                Iniciar sesión
+            </button>
+        </form>
+    </div>
+</div>

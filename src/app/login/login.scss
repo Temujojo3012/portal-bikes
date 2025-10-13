@@ -1,6 +1,33 @@
+@mixin mobile {
+    @media screen and (max-width: 880px) {
+        @content;
+    }
+}
+
+.login {
+    display: flex;
+    width: 1024px;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100dvh;
+
+    @include mobile {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
 form {
     display: flex;
     flex-direction: column;
-    width: 200px;
-    height: 400px;
+    width: 100%;
+    min-width: 400px;
+
+    @include mobile {
+        width: 100%;
+        min-width: 360px;
+        box-sizing: border-box;
+    }
 }
