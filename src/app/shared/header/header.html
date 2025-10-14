@@ -1,5 +1,13 @@
-<mat-toolbar class="no-print">
-    <button mat-button (click)="signOut()">
-        <mat-icon>logout</mat-icon> Cerrar sesión
-    </button>
+<mat-toolbar class="no-print header container">
+    <div matRipple class="btnHome">
+        <img src="assets/images/portal_bikes.png" alt="portal bikes logo" [routerLink]="'/'">
+    </div>
+    <div class="buttons">
+        <button [routerLink]="'/new-order'" mat-button>
+            <mat-icon>assignment_add</mat-icon>Orden de trabajo
+        </button>
+        <button mat-button (click)="signOut()">
+            <mat-icon>logout</mat-icon> Cerrar sesión
+        </button>
+    </div>
 </mat-toolbar>

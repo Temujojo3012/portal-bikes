@@ -1,0 +1,35 @@
+@mixin mobile {
+    @media screen and (max-width: 700px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media screen and (max-width: 1025px) {
+        @content;
+    }
+}
+
+.body {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+}
+
+.container {
+    width: 100%;
+    min-width: 1024px;
+
+    @include tablet {
+        min-width: 700px;
+    }
+
+    @include mobile {
+        width: 360px;
+        min-width: fit-content;
+    }
+}
+
+router-outlet {
+    display: none;
+}
