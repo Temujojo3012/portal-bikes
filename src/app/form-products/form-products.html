@@ -5,15 +5,15 @@
   <form [formGroup]="form">
     <mat-form-field>
       <mat-label>Nombre del Producto</mat-label>
-      <input matInput type="text" required [formControlName]="'name'">
+      <input matInput type="text" required [formControlName]="'service'">
     </mat-form-field>
     <mat-form-field>
-      <mat-label>SKU</mat-label>
-      <input matInput type="text" required [formControlName]="'sku'">
+      <mat-label>Marca</mat-label>
+      <input type="text" matInput [formControlName]="'brand'">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Cantidad</mat-label>
-      <input matInput type="number" min="0" required [formControlName]="'qty'">
+      <input matInput type="number" min="0" [formControlName]="'qty'">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Precio Unitario ($CLP)</mat-label>

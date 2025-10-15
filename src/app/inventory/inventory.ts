@@ -29,6 +29,6 @@ export class Inventory implements OnInit {
         });
   }
 
-  public displayedColumms = ['SKU', 'name', 'stock', 'price', 'tvalue', 'actions'];
+  public displayedColumms = ['service', 'stock', 'price', 'actions'];
 
 }

@@ -1,25 +1,17 @@
 <div class="list" id="lista-inventario">
   <h2>Inventario Actual</h2>
   <table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="SKU">
-      <th mat-header-cell *matHeaderCellDef>SKU</th>
-      <th mat-cell *matCellDef="let element">{{element.sku}}</th>
-    </ng-container>
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <th mat-cell *matCellDef="let element">{{element.name}}</th>
+    <ng-container matColumnDef="service">
+      <th mat-header-cell *matHeaderCellDef>Servicio</th>
+      <th mat-cell *matCellDef="let element">{{element.service}}</th>
     </ng-container>
     <ng-container matColumnDef="stock">
       <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-      <th mat-cell *matCellDef="let element">{{element.qty}}</th>
+      <th mat-cell *matCellDef="let element">{{element.qty ? element.qty: 0}}</th>
     </ng-container>
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>Precio unitario</th>
       <th mat-cell *matCellDef="let element">{{element.price}}</th>
-    </ng-container>
-    <ng-container matColumnDef="tvalue">
-      <th mat-header-cell *matHeaderCellDef>Valor total</th>
-      <th mat-cell *matCellDef="let element">{{element.price * element.qty}}</th>
     </ng-container>
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>

@@ -52,7 +52,7 @@ export class NewOrder implements OnInit {
     *];
   */
   public filteredOptions!: Array<IServiceOption>; //? = [...this.options];
-  public selectedOptions!: Array<IServiceOption>;
+  public selectedOptions: Array<IServiceOption> = [];
   public form!: FormGroup;
   public formProduct!: FormGroup;
 
@@ -107,11 +107,10 @@ export class NewOrder implements OnInit {
     if (!this.formProduct.value.service) {
       return;
     }
-    if (!this.selectedOptions.find(option => option.service === this.formProduct.value.service)) {
-      let option = this.selectedOption();
-      option = { ...option!, qty: this.formProduct.value.qty };
-      this.selectedOptions.push(option!);
-    }
+    let option = this.options.filter(option => option.service === this.formProduct.value.service);
+    this.selectedOptions.push({ ...option[0], qty: this.formProduct.value.qty });
+    console.log(this.selectedOptions);
+    this.formProduct.reset();
     this.table.renderRows();
   }
 
