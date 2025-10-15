@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-inventory',
@@ -15,11 +15,11 @@ export class Inventory implements OnInit {
   public dataSource!: any;
 
   constructor(
-    private firestroe: Firestore
+    private firestoreService: FirestoreService
   ) { }
 
   ngOnInit(): void {
-    this.getItems()
+    this.firestoreService.getItems('products')
       .subscribe(
         {
           next: (data: Array<any>) => {
@@ -27,11 +27,6 @@ export class Inventory implements OnInit {
             this.dataSource = data;
           }
         });
-  }
-
-  getItems(): Observable<any> {
-    const itemsCollection = collection(this.firestroe, 'products');
-    return collectionData(itemsCollection, {}) as Observable<any>
   }
 
   public displayedColumms = ['SKU', 'name', 'stock', 'price', 'tvalue', 'actions'];

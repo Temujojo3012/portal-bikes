@@ -2,3 +2,13 @@ form{
     display: flex;
     flex-direction: column;
 }
+
+.formProducts {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    mat-form-field {
+        flex: 1;
+    }
+}
