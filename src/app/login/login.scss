@@ -1,8 +1,4 @@
-@mixin mobile {
-    @media screen and (max-width: 880px) {
-        @content;
-    }
-}
+@use '../../../public/assets/scss/default' as d;
 
 .login {
     display: flex;
@@ -11,21 +7,33 @@
     align-items: center;
     height: 100dvh;
 
-    @include mobile {
-        width: 100%;
+    @include d.tablet {
+        width: 700px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
+    @include d.mobile {
+        width: 360px;
+    }
+
+    .left {
+        img {
+            width: 300px;
+            height: auto;
+            object-fit: contain;
+        }
+    }
 }
 
-form {
+.formLogin {
     display: flex;
     flex-direction: column;
     width: 100%;
     min-width: 400px;
 
-    @include mobile {
+    @include d.mobile {
         width: 100%;
         min-width: 360px;
         box-sizing: border-box;

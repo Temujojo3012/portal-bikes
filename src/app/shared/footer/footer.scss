@@ -1,13 +1,10 @@
 .footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
     width: 100%;
-    height: 60px;
-    background-color: #dde5da;
+    height: 90px;
+    text-align: right;
+    align-content: center;
 
     span {
-        margin-right: 25px;
+        margin: 0 25px 0 0;
     }
 }

@@ -1,17 +1,14 @@
-.header{
-    background-color: #dde5da;
+@use '../../../../public/assets/scss/default' as d;
+
+.header {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    height: 90px;
-}
 
-.btnHome{
-    border-radius: 50px;
-}
-
-img {
-    cursor: pointer;
-    width: 200px;
-    height: 80px;
-    object-fit: contain;
+    .btnHome {
+        img {
+            width: 120px;
+            object-fit: contain;
+        }
+    }
 }

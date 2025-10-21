@@ -1,3 +1,16 @@
-table{
-    box-shadow: 1px 1px 8px #c0c0c0;
+@use '../../../public/assets/scss/default' as d;
+
+.tableService {
+    width: 100%;
+    margin: 15px;
+    overflow: auto;
+
+    @include d.smobile {
+        width: calc(100dvw - 30px);
+    }
+
+    table {
+        width: 100%;
+        min-width: 500px;
+    }
 }

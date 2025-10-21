@@ -1,5 +1,5 @@
 import { FirestoreService } from './../services/firestore.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -8,6 +8,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTable, MatTableModule } from "@angular/material/table";
 import { CurrencyPipe } from '@angular/common';
+import { DataService } from '../services/data.service';
+import { Router } from '@angular/router';
 
 
 export interface IServiceOption {
@@ -17,6 +19,15 @@ export interface IServiceOption {
   qty?: number;
 }
 
+export interface IOrder {
+  name: string;
+  email: string;
+  phone?: string;
+  bicycle?: string;
+  brand?: string;
+  color?: string;
+  services: Array<IServiceOption>;
+}
 @Component({
   selector: 'app-new-order',
   imports: [
@@ -40,28 +51,30 @@ export class NewOrder implements OnInit {
 
   public displayedColumns: string[] = ['service', 'brand', 'price', 'qty', 'total', 'actions']
 
+  public isMobile: boolean = false;
+
   public options!: Array<IServiceOption>;
-  /*
-    *= [
-    *{ service: 'Limpieza', brand: 'Propia', price: 10000 },
-    *{ service: 'Ajuste de frenos', brand: 'Propia', price: 6000 },
-    *{ service: 'Ajuste de cambios', brand: 'Propia', price: 8000 },
-    *{ service: 'Revisión general', brand: 'Propia', price: 5000 },
-    *{ service: 'Reparación de pinchazos', brand: 'Propia', price: 7000 },
-    *{ service: 'Instalación de accesorios', brand: '', price: 4000 }
-    *];
-  */
-  public filteredOptions!: Array<IServiceOption>; //? = [...this.options];
+  public filteredOptions!: Array<IServiceOption>;
   public selectedOptions: Array<IServiceOption> = [];
   public form!: FormGroup;
   public formProduct!: FormGroup;
 
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
   constructor(
     private formBuilder: FormBuilder,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private dataService: DataService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth <= 768;
+
     this.buildForm();
     this.getItems();
   }
@@ -74,6 +87,7 @@ export class NewOrder implements OnInit {
       bicycle: '',
       brand: '',
       color: '',
+      observations: ''
     });
     this.formProduct = this.formBuilder.group({
       service: '',
@@ -109,7 +123,6 @@ export class NewOrder implements OnInit {
     }
     let option = this.options.filter(option => option.service === this.formProduct.value.service);
     this.selectedOptions.push({ ...option[0], qty: this.formProduct.value.qty });
-    console.log(this.selectedOptions);
     this.formProduct.reset();
     this.table.renderRows();
   }
@@ -125,7 +138,8 @@ export class NewOrder implements OnInit {
       return;
     }
     let orderDetails = { ...this.form.value, services: this.selectedOptions };
-    //TODO: compartir con vista bill y guardar en firestore
-    console.log(orderDetails);
+    this.dataService.sendData(orderDetails);
+
+    this.router.navigate(['/bill']);
   }
 }

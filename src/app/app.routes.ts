@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './home/home';
 import { ErrorPage } from './error-page/error-page';
 import { Login } from './login/login';
-import { authGuard } from './guard/auth-guard';
+import { authGuard } from './services/guard/auth-guard';
 import { Bill } from './bill/bill';
 import { NewOrder } from './new-order/new-order';
 

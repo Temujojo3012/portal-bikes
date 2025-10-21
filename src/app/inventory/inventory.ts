@@ -1,24 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import { FirestoreService } from '../services/firestore.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-inventory',
-  imports: [MatTableModule, MatButtonModule],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './inventory.html',
   styleUrl: './inventory.scss'
 })
 export class Inventory implements OnInit {
 
+  public displayedColumms = ['service', 'price', 'stock', 'actions'];
+  public isMobile: boolean = false;
+
   public dataSource!: any;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = window.innerWidth <= 768;
+  }
 
   constructor(
     private firestoreService: FirestoreService
   ) { }
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth <= 768;
     this.firestoreService.getItems('products')
       .subscribe(
         {
@@ -29,6 +42,5 @@ export class Inventory implements OnInit {
         });
   }
 
-  public displayedColumms = ['service', 'stock', 'price', 'actions'];
 
 }
