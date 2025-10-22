@@ -1,9 +1,33 @@
-form {
+@use '../../../public/assets/scss/default' as d;
+
+.sectionFormProduct {
     display: flex;
     flex-direction: column;
-    width: 50lvw;
-    box-shadow: 1px 1px 8px #c0c0c0;
-    border-radius: 8px;
-    max-width: 1024px;
-    min-width: 690px;
+
+    .formProduct {
+        width: 100%;
+        min-width: 360px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        form {
+            @include d.tablet {
+                margin: 0 25px;
+            }
+
+            @include d.mobile {
+                margin: 0 16px;
+            }
+        }
+        
+        mat-form-field {
+            width: 100%;
+        }
+    }
+    
+    .btn {
+        width: 150px;
+    }
 }

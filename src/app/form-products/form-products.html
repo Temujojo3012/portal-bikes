@@ -1,25 +1,24 @@
-<img src="assets/images/portal_bikes.jpeg" alt="portal bikes logo">
-<h1>Gestión de Inventario</h1>
-
-<div id="agregar-producto">
-  <h2>Añadir Nuevo Producto</h2>
-  <form [formGroup]="form">
-    <mat-form-field>
-      <mat-label>Nombre del Producto</mat-label>
-      <input matInput type="text" required [formControlName]="'name'">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>SKU</mat-label>
-      <input matInput type="text" required [formControlName]="'sku'">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Cantidad</mat-label>
-      <input matInput type="number" min="0" required [formControlName]="'qty'">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Precio Unitario ($CLP)</mat-label>
-      <input matInput type="number" min="0" required [formControlName]="'price'">
-    </mat-form-field>
-    <button mat-button type="submit" (click)="addItem()">Guardar Producto</button>
-  </form>
+<div class="sectionFormProduct">
+  <h1>Gestión de Inventario</h1>
+  <div id="agregar-producto" class="formProduct">
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Nombre del Producto</mat-label>
+        <input matInput type="text" required [formControlName]="'service'">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Marca</mat-label>
+        <input type="text" matInput [formControlName]="'brand'">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" min="0" [formControlName]="'qty'">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Precio Unitario ($CLP)</mat-label>
+        <input matInput type="number" min="0" required [formControlName]="'price'">
+      </mat-form-field>
+    </form>
+    <button class="btn" mat-button type="submit" (click)="addItem()">Añadir Producto</button>
+  </div>
 </div>

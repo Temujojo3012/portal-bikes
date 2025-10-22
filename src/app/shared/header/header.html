@@ -1,5 +1,27 @@
-<mat-toolbar class="no-print">
-    <button mat-button (click)="signOut()">
-        <mat-icon>logout</mat-icon> Cerrar sesión
+<mat-toolbar class="no-print header">
+    <div matRipple class="btnHome">
+        <img src="assets/images/portal_bikes.png" alt="portal bikes logo" [routerLink]="'/'">
+    </div>
+    @if (!isMobile) {
+    <div class="buttons">
+        <button [routerLink]="'/new-order'" mat-button>
+            <mat-icon>assignment_add</mat-icon>Orden de trabajo
+        </button>
+        <button mat-button (click)="signOut()">
+            <mat-icon>logout</mat-icon> Cerrar sesión
+        </button>
+    </div>
+    } @else {
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+        <button [routerLink]="'/new-order'" mat-button>
+            <mat-icon>assignment_add</mat-icon>Orden de trabajo
+        </button>
+        <button mat-button (click)="signOut()">
+            <mat-icon>logout</mat-icon> Cerrar sesión
+        </button>
+    </mat-menu>
+    }
 </mat-toolbar>

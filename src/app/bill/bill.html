@@ -1,9 +1,9 @@
 <div class="sectionBill">
     <div class="head">
         <div class="contact">
-            <img src="assets/images/portal_bikes.jpeg" alt="portal bikes logo">
+            <img src="assets/images/portal_bikes.png" alt="portal bikes logo">
             <div class="info">
-                <b>Jardines de rauquen calle agua helada, 2583, Curicó </b><br>
+                <b>Jardines de Rauquén, calle Agua Helada 2583, Curicó </b><br>
                 <span><b>+569 5014 1056</b> </span><br>
                 <span><b>portal.bike.curico@gmail.com</b></span>
 
@@ -38,9 +38,9 @@
     </div>
     <div class="detailsService">
         <table mat-table [dataSource]="orderDetails" class="table">
-            <ng-container matColumnDef="description">
+            <ng-container matColumnDef="service">
                 <th mat-header-cell *matHeaderCellDef>Detalle</th>
-                <td mat-cell *matCellDef="let element">{{element.description}}</td>
+                <td mat-cell *matCellDef="let element">{{element.service}}</td>
             </ng-container>
             <ng-container matColumnDef="brand">
                 <th mat-header-cell *matHeaderCellDef>Marca</th>

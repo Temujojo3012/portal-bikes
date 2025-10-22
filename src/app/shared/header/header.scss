@@ -1,0 +1,14 @@
+@use '../../../../public/assets/scss/default' as d;
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .btnHome {
+        img {
+            width: 120px;
+            object-fit: contain;
+        }
+    }
+}
