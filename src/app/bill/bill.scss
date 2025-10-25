@@ -1,8 +1,14 @@
+@use '../../../public/assets/scss/default' as d;
+
 .sectionBill {
     margin: 10px;
     width: 800px;
     display: flex;
     flex-direction: column;
+
+    @include d.mobile{
+        width: calc(100dvw - 30px);
+    }
 
     .head {
         display: flex;
@@ -16,6 +22,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            @include d.mobile {
+                flex-direction: column;
+            }
 
             info {
                 width: 350px;
@@ -36,6 +46,12 @@
     .detailsService {
         margin: 10px;
 
+        @include d.mobile {
+            width: calc(100dvw - 50px);
+            margin: 15px;
+            overflow: auto;
+        }
+
         h2 {
             text-align: center;
         }
@@ -52,11 +68,6 @@
             th{
                 background-color: lightseagreen;
             }
-        }
-
-        .table {
-            //box-shadow: 1px 1px 5px black;
-            border: 1px solid black
         }
     }
 

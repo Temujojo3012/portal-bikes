@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { FirestoreService } from '../services/firestore.service';
@@ -21,14 +21,12 @@ export class Inventory implements OnInit {
 
   public dataSource!: any;
 
+  private firestoreService: FirestoreService = inject(FirestoreService);
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isMobile = window.innerWidth <= 768;
   }
-
-  constructor(
-    private firestoreService: FirestoreService
-  ) { }
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth <= 768;

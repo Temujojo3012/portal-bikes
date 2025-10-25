@@ -37,7 +37,6 @@ h2 {
         min-width: 700px;
     }
 
-    //TODO: Revisar este width
     @include mobile {
         width: 360px;
         min-width: fit-content;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { Header } from './shared/header/header';
 import { Footer } from "./shared/footer/footer";
@@ -10,9 +10,7 @@ import { Footer } from "./shared/footer/footer";
 })
 export class App {
 
-  constructor(
-    private router: Router
-  ) { }
+  private router: Router = inject(Router);
 
   notShowHeader(): boolean {
     if (

@@ -1,5 +1,4 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +9,7 @@ import { from } from 'rxjs';
 
 @Component({
   selector: 'app-bill',
-  imports: [MatTableModule, MatDividerModule, MatIconModule, MatButtonModule, CurrencyPipe],
+  imports: [MatTableModule, MatIconModule, MatButtonModule, CurrencyPipe],
   templateUrl: './bill.html',
   styleUrl: './bill.scss'
 })
@@ -27,11 +26,12 @@ export class Bill implements OnInit, OnDestroy {
 
   public name!: string;
   public phone!: string;
+  public email!: string;
   public bicycle!: string;
   public brand!: string;
   public color!: string;
 
-  public observations: string = 'Ninguna'
+  public observations!: string
 
   public orderDetails!: any;
 
@@ -43,10 +43,11 @@ export class Bill implements OnInit, OnDestroy {
         if (res && Object.keys(res).length) {
           this.name = res.name,
             this.phone = res.phone,
-            this.bicycle = res.bicycle,
-            this.brand = res.brand,
-            this.color = res.color,
-            this.observations = res.observations,
+            this.email = res.email ? res.email : 'No especificado',
+            this.bicycle = res.bicycle ? res.bicycle : 'No especificado',
+            this.brand = res.brand ? res.brand : 'No especificada',
+            this.color = res.color ? res.color : 'No especificado',
+            this.observations = res.observations ? res.observations : 'Sin observaciones',
             this.orderDetails = res.services;
         } else {
           this.router.navigate(['/new-order']);
