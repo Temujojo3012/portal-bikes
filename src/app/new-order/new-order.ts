@@ -1,5 +1,5 @@
 import { FirestoreService } from './../services/firestore.service';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -60,17 +60,15 @@ export class NewOrder implements OnInit {
   public formProduct!: FormGroup;
 
 
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  private firestoreService: FirestoreService = inject(FirestoreService);
+  private dataService: DataService = inject(DataService);
+  private router: Router = inject(Router);
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isMobile = window.innerWidth <= 768;
   }
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private firestoreService: FirestoreService,
-    private dataService: DataService,
-    private router: Router
-  ) { }
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth <= 768;

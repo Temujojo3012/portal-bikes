@@ -2,15 +2,21 @@
 
 .tableService {
     width: 100%;
-    margin: 15px;
-    overflow: auto;
 
-    @include d.smobile {
-        width: calc(100dvw - 30px);
-    }
+        @include d.tablet {
+            width: calc(100dvw - 52px);
+            margin: 26px;
+            overflow: auto;
+        }
 
-    table {
-        width: 100%;
-        min-width: 500px;
-    }
+        @include d.mobile {
+            width: calc(100dvw - 30px);
+            margin: 0 15px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 500px;
+        }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,10 +14,8 @@ import { FirestoreService } from '../services/firestore.service';
 export class FormProducts implements OnInit {
   public form!: FormGroup
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private firestoreService: FirestoreService
-  ) { }
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  private firestoreService: FirestoreService = inject(FirestoreService);
 
   ngOnInit(): void {
     this.buildForm();

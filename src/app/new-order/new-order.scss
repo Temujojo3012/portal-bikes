@@ -1,26 +1,48 @@
 @use '../../../public/assets/scss/default' as d;
 
 .sectionNewOrder {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
 
-    .orderForm, .formProducts{
+    .formOrder,
+    .formService {
         width: 100%;
+        min-width: 360px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         form {
-            margin: 0 15px;
-            display: flex;
-            flex-direction: column;
-
-            mat-form-field{
-                width: 100&;
+            max-width: 848px;
+            
+            @include d.tablet {
+                margin: 0 25px;
             }
+            
+            @include d.mobile {
+                margin: 0 16px;
+            }
+            button{
+                align-self: center;
+            }
+        }
+
+        mat-form-field {
+            width: 100%;
         }
     }
 
     .tableServices {
         width: 100%;
 
-       @include d.mobile {
+        @include d.tablet {
+            width: calc(100dvw - 52px);
+            margin: 26px;
+            overflow: auto;
+        }
+
+        @include d.mobile {
             width: calc(100dvw - 30px);
             margin: 0 15px;
             overflow: auto;
@@ -28,7 +50,7 @@
 
         table {
             width: 100%;
-            min-width: 800px;
+            min-width: 600px;
         }
     }
 }
