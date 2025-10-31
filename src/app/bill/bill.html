@@ -9,7 +9,7 @@
 
                 <br><br>
                 <b>
-                    N°: {{orderNumber}}
+                    N°: {{orderData.orderNumber}}
                 </b><br>
                 <b>
                     Fecha: {{date}}
@@ -21,26 +21,26 @@
 
     <div class="infoClient">
         <span>
-            <b>Nombre: </b>{{name}}
+            <b>Nombre: </b>{{orderData.name}}
         </span>
         <span>
-            <b>Télefono: </b>{{phone}}
+            <b>Télefono: </b>{{orderData.phone}}
         </span>
         <span>
-            <b>E-mail: </b>{{email}}
+            <b>E-mail: </b>{{orderData.email}}
         </span>
         <span>
-            <b>Tipo de Bicicleta: </b>{{bicycle}}
+            <b>Tipo de Bicicleta: </b>{{orderData.bicycle}}
         </span>
         <span>
-            <b>Marca: </b>{{brand}}
+            <b>Marca: </b>{{orderData.brand}}
         </span>
         <span>
-            <b>Color: </b>{{color}}
+            <b>Color: </b>{{orderData.color}}
         </span>
     </div>
     <div class="detailsService">
-        <table mat-table [dataSource]="orderDetails" class="table">
+        <table mat-table [dataSource]="services" class="table">
             <ng-container matColumnDef="service" sticky>
                 <th mat-header-cell *matHeaderCellDef>Detalle</th>
                 <td mat-cell *matCellDef="let element">{{element.service}}</td>
@@ -74,7 +74,7 @@
     </div>
     <!--Calcular el total de al orden-->
 
-    Observaciones: {{observations}}
+    Observaciones: {{orderData.observations}}
     <div class="sign">
         Firma cliente: _______________
         Firma técnico: _______________
