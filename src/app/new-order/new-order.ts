@@ -96,7 +96,7 @@ export class NewOrder implements OnInit {
   }
 
   public getItems(): void {
-    this.firestoreService.getItems('products').subscribe(items => {
+    this.firestoreService.getCollection('products').subscribe(items => {
       this.options = items;
       this.filteredOptions = [...this.options];
     });

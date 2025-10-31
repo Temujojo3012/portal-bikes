@@ -34,7 +34,7 @@ export class FormProducts implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.firestoreService.addItem('products', this.form.value);
+    this.firestoreService.addDoc('products', this.form.value);
     this.form.reset();
   }
 }

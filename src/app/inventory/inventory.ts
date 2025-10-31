@@ -30,7 +30,7 @@ export class Inventory implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth <= 768;
-    this.firestoreService.getItems('products')
+    this.firestoreService.getCollection('products')
       .subscribe(
         {
           next: (data: Array<any>) => {
