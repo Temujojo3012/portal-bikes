@@ -113,7 +113,7 @@ export class NewOrder implements OnInit, OnDestroy {
     });
     this.formProduct = this.formBuilder.group({
       service: '',
-      brandProduct: { value: '', disabled: true },
+      brandProduct: '',
       price: 0,
       qty: 0,
     });

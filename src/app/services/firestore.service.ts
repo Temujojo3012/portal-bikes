@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, docData, Firestore, setDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,12 @@ export class FirestoreService {
 
   getCollection(collectionName: string): Observable<any> {
     const itemsCollection = collection(this.firestore, collectionName);
-    return collectionData(itemsCollection, { idField: 'id' }) as Observable<any>
+    return collectionData(itemsCollection, { idField: 'id' }) as Observable<any>;
+  }
+
+  getDoc(collectionName: string, docName: string): Observable<any> {
+    const itemDoc = doc(this.firestore, collectionName, docName);
+    return docData(itemDoc, { idField: 'id' }) as Observable<any>;
   }
 
   addDoc(collectionName: string, data: any): void {
@@ -19,13 +24,13 @@ export class FirestoreService {
     addDoc(itemCollection, data);
   }
 
-  getDoc(collectionName: string, docName: string): Observable<any> {
-    const itemDoc = doc(this.firestore, collectionName, docName)
-    return docData(itemDoc, { idField: 'id' }) as Observable<any>
+  updateDoc(collectionName: string, docName: string, data: any): void {
+    const itemDoc = doc(this.firestore, collectionName, docName);
+    setDoc(itemDoc, data);
   }
 
-  updateDoc(collectionName: string, docName: string, data: any) {
-    const itemDoc = doc(this.firestore, collectionName, docName);
-    return setDoc(itemDoc, data)
+  deleteDoc(collectionName: string, docId: string): void {
+    const itemDoc = doc(this.firestore, collectionName, docId)
+    deleteDoc(itemDoc);
   }
 }

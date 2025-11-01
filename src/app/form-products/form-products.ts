@@ -12,10 +12,11 @@ import { FirestoreService } from '../services/firestore.service';
   styleUrl: './form-products.scss'
 })
 export class FormProducts implements OnInit {
-  public form!: FormGroup
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private firestoreService: FirestoreService = inject(FirestoreService);
+
+  public form!: FormGroup
 
   ngOnInit(): void {
     this.buildForm();
