@@ -4,22 +4,22 @@
     </div>
     @if (!isMobile) {
     <div class="buttons">
-        <button [routerLink]="'/new-order'" mat-button>
+        <button [routerLink]="'/new-order'" matButton>
             <mat-icon>assignment_add</mat-icon>Orden de trabajo
         </button>
-        <button mat-button (click)="signOut()">
+        <button matButton (click)="signOut()">
             <mat-icon>logout</mat-icon> Cerrar sesión
         </button>
     </div>
     } @else {
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button matIconButton [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-        <button [routerLink]="'/new-order'" mat-button>
+        <button [routerLink]="'/new-order'" matButton>
             <mat-icon>assignment_add</mat-icon>Orden de trabajo
         </button>
-        <button mat-button (click)="signOut()">
+        <button matButton (click)="signOut()">
             <mat-icon>logout</mat-icon> Cerrar sesión
         </button>
     </mat-menu>

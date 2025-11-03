@@ -5,6 +5,7 @@ import { FirestoreService } from '../services/firestore.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDialog } from '../shared/edit-dialog/edit-dialog';
+import { DeleteDialog } from '../shared/delete-dialog/delete-dlialog';
 
 @Component({
   selector: 'app-inventory',
@@ -43,8 +44,15 @@ export class Inventory implements OnInit {
   }
 
   public deleteItem(id: string): void {
-    //TODO: añadir alerta de querer borrar items
-    this.firestoreService.deleteDoc('products', id);
+    let itemFind = this.dataSource.find((a) => a.id === id);
+    var dialogRef = this.dialog.open(DeleteDialog, { data: itemFind });
+    dialogRef.afterClosed().subscribe({
+      next: (data) => {
+        if (data) {
+          this.firestoreService.deleteDoc('products', id);
+        }
+      }
+    })
   }
 
   editItem(id: string): void {
@@ -52,7 +60,9 @@ export class Inventory implements OnInit {
     const dialogRef = this.dialog.open(EditDialog, { data: itemFind, id: id });
     dialogRef.afterClosed().subscribe({
       next: (data) => {
-        this.firestoreService.updateDoc('products', data.id, data.data);
+        if(data){
+          this.firestoreService.updateDoc('products', data.id, data.data);
+        }
       }
     })
 
