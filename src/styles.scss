@@ -58,14 +58,13 @@ body {
   }
 }
 
-
 @media print {
   .no-print {
     display: none !important;
   }
 }
 
-app-bill{
+app-bill {
   padding: 0 100px;
 
   @include d.tablet {

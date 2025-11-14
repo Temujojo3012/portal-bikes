@@ -3,6 +3,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { FirestoreService } from '../services/firestore.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDialog } from '../shared/edit-dialog/edit-dialog';
+import { DeleteDialog } from '../shared/delete-dialog/delete-dlialog';
 
 @Component({
   selector: 'app-inventory',
@@ -16,12 +19,12 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class Inventory implements OnInit {
 
-  public displayedColumms = ['service', 'price', 'stock', 'actions'];
-  public isMobile: boolean = false;
-
-  public dataSource!: any;
-
   private firestoreService: FirestoreService = inject(FirestoreService);
+  readonly dialog: MatDialog = inject(MatDialog);
+
+  public displayedColumms: Array<string> = ['service', 'brand', 'price', 'stock', 'actions'];
+  public isMobile: boolean = false;
+  public dataSource: Array<any> = [];
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -30,15 +33,39 @@ export class Inventory implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth <= 768;
-    this.firestoreService.getItems('products')
+    this.firestoreService.getCollection('products')
       .subscribe(
         {
           next: (data: Array<any>) => {
-            data.sort((a, b) => a.sku - b.sku);
             this.dataSource = data;
+            this.dataSource.sort((a, b) => a.service.localeCompare(b.service));
           }
         });
   }
 
+  public deleteItem(id: string): void {
+    let itemFind = this.dataSource.find((a) => a.id === id);
+    var dialogRef = this.dialog.open(DeleteDialog, { data: itemFind });
+    dialogRef.afterClosed().subscribe({
+      next: (data) => {
+        if (data) {
+          this.firestoreService.deleteDoc('products', id);
+        }
+      }
+    })
+  }
+
+  editItem(id: string): void {
+    let itemFind = this.dataSource.find((a) => a.id === id);
+    const dialogRef = this.dialog.open(EditDialog, { data: itemFind, id: id });
+    dialogRef.afterClosed().subscribe({
+      next: (data) => {
+        if(data){
+          this.firestoreService.updateDoc('products', data.id, data.data);
+        }
+      }
+    })
+
+  }
 
 }

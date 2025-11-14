@@ -5,7 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CurrencyPipe } from '@angular/common';
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
-import { from } from 'rxjs';
+import { FirestoreService } from '../services/firestore.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-bill',
@@ -15,40 +16,47 @@ import { from } from 'rxjs';
 })
 export class Bill implements OnInit, OnDestroy {
 
-  private data!: any;
+  private data!: Subscription;
 
-  private dataService = inject(DataService);
-  private router = inject(Router);
+  private dataService: DataService = inject(DataService);
+  private router: Router = inject(Router);
+  private firestoreService: FirestoreService = inject(FirestoreService);
 
-  //TODO: Cambiar orderNumber por un ID autogenerado en firebase
-  public orderNumber: string = '13';
+  public orderData = {
+    orderNumber: 0,
+    name: '',
+    phone: '',
+    email: '',
+    bicycle: '',
+    brand: '',
+    color: '',
+    observations: '',
+    services: []
+  }
   public date: string = '';
 
-  public name!: string;
-  public phone!: string;
-  public email!: string;
-  public bicycle!: string;
-  public brand!: string;
-  public color!: string;
-
-  public observations!: string
-
-  public orderDetails!: any;
+  public services!: any;
 
   displayedColumns = ['service', 'brand', 'price', 'qty', 'total'];
 
   ngOnInit(): void {
+    this.firestoreService.getDoc('orders', 'counters').subscribe({
+      next: (data) => {
+        this.orderData.orderNumber = data.bill_number + 1;
+      }
+    })
+
     this.data = this.dataService.getData().subscribe({
       next: (res) => {
         if (res && Object.keys(res).length) {
-          this.name = res.name,
-            this.phone = res.phone,
-            this.email = res.email ? res.email : 'No especificado',
-            this.bicycle = res.bicycle ? res.bicycle : 'No especificado',
-            this.brand = res.brand ? res.brand : 'No especificada',
-            this.color = res.color ? res.color : 'No especificado',
-            this.observations = res.observations ? res.observations : 'Sin observaciones',
-            this.orderDetails = res.services;
+          this.orderData.name = res.name;
+          this.orderData.phone = res.phone;
+          this.orderData.email = res.email ? res.email : 'No especificado';
+          this.orderData.bicycle = res.bicycle ? res.bicycle : 'No especificado';
+          this.orderData.brand = res.brand ? res.brand : 'No especificada';
+          this.orderData.color = res.color ? res.color : 'No especificado';
+          this.orderData.observations = res.observations ? res.observations : 'Sin observaciones';
+          this.services = res.services;
         } else {
           this.router.navigate(['/new-order']);
         }
@@ -60,17 +68,31 @@ export class Bill implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log(this.dataService)
     if (this.dataService) {
       this.data.unsubscribe();
     }
   }
 
   public print(): void {
+    this.orderData = { ...this.orderData, services: this.services };
+    this.firestoreService.addDoc('bills', this.orderData);
+    this.firestoreService.updateDoc('orders', 'counters', { bill_number: this.orderData.orderNumber });
+    this.router.navigate(['new-order']);
+    this.dataService.clearData();
     window.print();
   }
 
   public editOrder(): void {
-    console.log('Editar orden de compra: ' + this.orderNumber)
+    this.orderData = { ...this.orderData, services: this.services };
+    this.dataService.sendData(this.orderData);
+    this.router.navigate(['new-order']);
+  }
+
+  getTotal(): number {
+    let total = 0;
+    this.services.forEach((service: any) => {
+      total += service.price * service.qty;
+    });
+    return total | 0;
   }
 }

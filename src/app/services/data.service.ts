@@ -16,4 +16,7 @@ export class DataService {
     return this.dataSubject.asObservable();
   }
 
+  clearData() {
+    this.dataSubject.next({});
+  }
 }

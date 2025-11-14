@@ -1,5 +1,5 @@
 import { FirestoreService } from './../services/firestore.service';
-import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,12 +10,14 @@ import { MatTable, MatTableModule } from "@angular/material/table";
 import { CurrencyPipe } from '@angular/common';
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 export interface IServiceOption {
   service: string;
   brand: string;
   price: number;
+  id: string;
   qty?: number;
 }
 
@@ -45,7 +47,7 @@ export interface IOrder {
   styleUrl: './new-order.scss'
 })
 
-export class NewOrder implements OnInit {
+export class NewOrder implements OnInit, OnDestroy {
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
   @ViewChild(MatTable) table!: MatTable<any>;
 
@@ -59,6 +61,7 @@ export class NewOrder implements OnInit {
   public form!: FormGroup;
   public formProduct!: FormGroup;
 
+  private data!: Subscription;
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private firestoreService: FirestoreService = inject(FirestoreService);
@@ -75,6 +78,28 @@ export class NewOrder implements OnInit {
 
     this.buildForm();
     this.getItems();
+
+    this.data = this.dataService.getData().subscribe({
+      next: (data) => {
+        if (data.name) {
+          this.form.controls['name'].setValue(data.name);
+          this.form.controls['email'].setValue(data.email);
+          this.form.controls['phone'].setValue(data.phone);
+          this.form.controls['bicycle'].setValue(data.bicycle);
+          this.form.controls['brand'].setValue(data.brand);
+          this.form.controls['color'].setValue(data.color);
+          this.form.controls['observations'].setValue(data.observations);
+
+          this.selectedOptions = data.services;
+        }
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.dataService) {
+      this.data.unsubscribe();
+    }
   }
 
   private buildForm(): void {
@@ -89,14 +114,14 @@ export class NewOrder implements OnInit {
     });
     this.formProduct = this.formBuilder.group({
       service: '',
-      brandProduct: { value: '', disabled: true },
+      brandProduct: '',
       price: 0,
       qty: 0,
     });
   }
 
   public getItems(): void {
-    this.firestoreService.getItems('products').subscribe(items => {
+    this.firestoreService.getCollection('products').subscribe(items => {
       this.options = items;
       this.filteredOptions = [...this.options];
     });
@@ -111,7 +136,7 @@ export class NewOrder implements OnInit {
     if (!this.options) {
       return undefined;
     }
-    let option = this.options.find(option => option.service === this.formProduct.value.service);
+    let option = this.options.find(option => option.id === this.formProduct.value.service);
     return option;
   }
 
@@ -119,7 +144,7 @@ export class NewOrder implements OnInit {
     if (!this.formProduct.value.service) {
       return;
     }
-    let option = this.options.filter(option => option.service === this.formProduct.value.service);
+    let option = this.options.filter(option => option.id === this.formProduct.value.service);
     this.selectedOptions.push({ ...option[0], qty: this.formProduct.value.qty });
     this.formProduct.reset();
     this.table.renderRows();
@@ -139,5 +164,9 @@ export class NewOrder implements OnInit {
     this.dataService.sendData(orderDetails);
 
     this.router.navigate(['/bill']);
+  }
+
+  public getTotal(): number {
+    return this.selectedOptions.reduce((acc, option) => acc + (option.price * (option.qty || 1)), 0);
   }
 }

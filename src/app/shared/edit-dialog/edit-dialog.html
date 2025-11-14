@@ -1,0 +1,27 @@
+<div class="modalContent">
+    <h2 mat-dialog-title>Modificacón de producto</h2>
+    <mat-dialog-content>
+        <form [formGroup]="form" class="modalForm">
+            <mat-form-field>
+                <mat-label>Nombre del producto</mat-label>
+                <input matInput [formControlName]="'service'" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Marca</mat-label>
+                <input matInput [formControlName]="'brand'">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Cantidad</mat-label>
+                <input matInput [formControlName]="'qty'">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Pecio unitario ($CLP)</mat-label>
+                <input matInput [formControlName]="'price'" required>
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button matButton="filled" (click)="editProduct()">Modificar</button>
+        <button matButton="tonal" mat-dialog-close>Cancelar</button>
+    </mat-dialog-actions>
+</div>
