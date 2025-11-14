@@ -1,39 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { map, Observable } from 'rxjs';
+import { FirestoreService } from '../services/firestore.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDialog } from '../shared/edit-dialog/edit-dialog';
+import { DeleteDialog } from '../shared/delete-dialog/delete-dlialog';
 
 @Component({
   selector: 'app-inventory',
-  imports: [MatTableModule, MatButtonModule],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './inventory.html',
   styleUrl: './inventory.scss'
 })
 export class Inventory implements OnInit {
 
-  public dataSource!: any;
+  private firestoreService: FirestoreService = inject(FirestoreService);
+  readonly dialog: MatDialog = inject(MatDialog);
 
-  constructor(
-    private firestroe: Firestore
-  ) { }
+  public displayedColumms: Array<string> = ['service', 'brand', 'price', 'stock', 'actions'];
+  public isMobile: boolean = false;
+  public dataSource: Array<any> = [];
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = window.innerWidth <= 768;
+  }
 
   ngOnInit(): void {
-    this.getItems()
+    this.isMobile = window.innerWidth <= 768;
+    this.firestoreService.getCollection('products')
       .subscribe(
         {
           next: (data: Array<any>) => {
-            data.sort((a, b) => a.sku - b.sku);
             this.dataSource = data;
+            this.dataSource.sort((a, b) => a.service.localeCompare(b.service));
           }
         });
   }
 
-  getItems(): Observable<any> {
-    const itemsCollection = collection(this.firestroe, 'products');
-    return collectionData(itemsCollection, {}) as Observable<any>
+  public deleteItem(id: string): void {
+    let itemFind = this.dataSource.find((a) => a.id === id);
+    var dialogRef = this.dialog.open(DeleteDialog, { data: itemFind });
+    dialogRef.afterClosed().subscribe({
+      next: (data) => {
+        if (data) {
+          this.firestoreService.deleteDoc('products', id);
+        }
+      }
+    })
   }
 
-  public displayedColumms = ['SKU', 'name', 'stock', 'price', 'tvalue', 'actions'];
+  editItem(id: string): void {
+    let itemFind = this.dataSource.find((a) => a.id === id);
+    const dialogRef = this.dialog.open(EditDialog, { data: itemFind, id: id });
+    dialogRef.afterClosed().subscribe({
+      next: (data) => {
+        if(data){
+          this.firestoreService.updateDoc('products', data.id, data.data);
+        }
+      }
+    })
+
+  }
 
 }

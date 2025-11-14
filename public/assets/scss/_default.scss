@@ -1,0 +1,53 @@
+@mixin tablet {
+    @media screen and (max-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin smobile {
+    @media screen and (max-width: 530px) {
+        @content;
+    }
+}
+
+h1,
+h2 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 30px
+}
+
+
+.body {
+    height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.container {
+    width: 100%;
+    min-width: 1024px;
+
+    @include tablet {
+        min-width: 700px;
+    }
+
+    @include mobile {
+        width: 360px;
+        min-width: fit-content;
+    }
+}
+
+router-outlet {
+    display: none;
+}
+
+.mat-mdc-table-sticky-border-elem-left {
+    border-right: 1px solid #e0e0e0;
+}

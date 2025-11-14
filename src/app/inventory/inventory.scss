@@ -1,9 +1,22 @@
-.list {
-    width: 50lvw;
-    max-width: 1024px;
-    min-width: 690px;
-}
+@use '../../../public/assets/scss/default' as d;
 
-table{
-    box-shadow: 1px 1px 8px #c0c0c0;
+.tableService {
+    width: 100%;
+
+        @include d.tablet {
+            width: calc(100dvw - 52px);
+            margin: 26px;
+            overflow: auto;
+        }
+
+        @include d.mobile {
+            width: calc(100dvw - 30px);
+            margin: 0 15px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 500px;
+        }
 }

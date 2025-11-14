@@ -1,0 +1,10 @@
+<div class="modalContent">
+    <h2 mat-dialog-title>Eliminación de producto</h2>
+    <mat-dialog-content>
+        <span>Estas seguro que deseas eliminar <strong>{{data.service}} - {{data.brand}} </strong></span>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button matButton="tonal" (click)="confirmDelete()" color="primary">Eliminar</button>
+        <button matButton="filled" [mat-dialog-close]="false">Candelar</button>
+    </mat-dialog-actions>
+</div>

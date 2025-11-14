@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-form-products',
@@ -11,13 +11,12 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './form-products.html',
   styleUrl: './form-products.scss'
 })
-export class FormProducts implements OnInit{
-  public form!: FormGroup
+export class FormProducts implements OnInit {
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private firestore: Firestore
-  ) { }
+  private formBuilder: FormBuilder = inject(FormBuilder);
+  private firestoreService: FirestoreService = inject(FirestoreService);
+
+  public form!: FormGroup
 
   ngOnInit(): void {
     this.buildForm();
@@ -25,8 +24,8 @@ export class FormProducts implements OnInit{
 
   private buildForm(): void {
     this.form = this.formBuilder.group({
-      name: '',
-      sku: '',
+      service: '',
+      brand: '',
       qty: '',
       price: 0,
     })
@@ -36,7 +35,7 @@ export class FormProducts implements OnInit{
     if (this.form.invalid) {
       return;
     }
-    const itemCollection = collection(this.firestore, 'products');
-    addDoc(itemCollection, this.form.value);
+    this.firestoreService.addDoc('products', this.form.value);
+    this.form.reset();
   }
 }

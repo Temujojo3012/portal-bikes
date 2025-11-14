@@ -44,8 +44,11 @@ Thumbs.db
 # Firebase
 .firebase
 .firebaserc
+firestore.rules
+firestore.indexes.json
 firebase.json
 *-debug.log
 .runtimeconfig.json
 
+# Environments
 src/environments

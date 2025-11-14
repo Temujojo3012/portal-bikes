@@ -1,15 +1,15 @@
 <div class="sectionBill">
     <div class="head">
         <div class="contact">
-            <img src="assets/images/portal_bikes.jpeg" alt="portal bikes logo">
+            <img src="assets/images/portal_bikes.png" alt="portal bikes logo">
             <div class="info">
-                <b>Jardines de rauquen calle agua helada, 2583, Curicó </b><br>
+                <b>Jardines de Rauquén, calle Agua Helada 2583, Curicó </b><br>
                 <span><b>+569 5014 1056</b> </span><br>
                 <span><b>portal.bike.curico@gmail.com</b></span>
 
                 <br><br>
                 <b>
-                    N°: {{orderNumber}}
+                    N°: {{orderData.orderNumber}}
                 </b><br>
                 <b>
                     Fecha: {{date}}
@@ -21,52 +21,60 @@
 
     <div class="infoClient">
         <span>
-            <b>Nombre: </b>{{name}}
+            <b>Nombre: </b>{{orderData.name}}
         </span>
         <span>
-            <b>Télefono: </b>{{phone}}
+            <b>Télefono: </b>{{orderData.phone}}
         </span>
         <span>
-            <b>Tipo de Bicicleta: </b>{{bicycle}}
+            <b>E-mail: </b>{{orderData.email}}
         </span>
         <span>
-            <b>Marca: </b>{{brand}}
+            <b>Tipo de Bicicleta: </b>{{orderData.bicycle}}
         </span>
         <span>
-            <b>Color: </b>{{color}}
+            <b>Marca: </b>{{orderData.brand}}
+        </span>
+        <span>
+            <b>Color: </b>{{orderData.color}}
         </span>
     </div>
     <div class="detailsService">
-        <table mat-table [dataSource]="orderDetails" class="table">
-            <ng-container matColumnDef="description">
+        <table mat-table [dataSource]="services" class="table">
+            <ng-container matColumnDef="service" sticky>
                 <th mat-header-cell *matHeaderCellDef>Detalle</th>
-                <td mat-cell *matCellDef="let element">{{element.description}}</td>
+                <td mat-cell *matCellDef="let element">{{element.service}}</td>
+                <td mat-footer-cell *matFooterCellDef>Total</td>
             </ng-container>
             <ng-container matColumnDef="brand">
                 <th mat-header-cell *matHeaderCellDef>Marca</th>
                 <td mat-cell *matCellDef="let element">{{element.brand}}</td>
+                <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
             <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Precio unitario</th>
                 <td mat-cell *matCellDef="let element">{{element.price | currency:'CLP':'$' }}</td>
+                <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
             <ng-container matColumnDef="qty">
                 <th mat-header-cell *matHeaderCellDef>Cantidad</th>
                 <td mat-cell *matCellDef="let element">{{element.qty}}</td>
+                <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
             <ng-container matColumnDef="total">
                 <th mat-header-cell *matHeaderCellDef>Valor</th>
                 <td mat-cell *matCellDef="let element">{{element.price * element.qty | currency:'CLP':'$' }}</td>
+                <td mat-footer-cell *matFooterCellDef> {{ getTotal() | currency:'CLP':'$':'1.0-0'}}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns;"></tr>
         </table>
     </div>
     <!--Calcular el total de al orden-->
 
-    Observaciones: {{observations}}
-    <mat-divider></mat-divider>
+    Observaciones: {{orderData.observations}}
     <div class="sign">
         Firma cliente: _______________
         Firma técnico: _______________
@@ -85,10 +93,10 @@
     </div>
 </div>
 
-<button mat-button (click)="print()" class="no-print">
+<button matButton (click)="print()" class="no-print">
     <mat-icon>print</mat-icon> Imprimir
 </button>
 
-<button mat-button (click)="editOrder()" class="no-print">
+<button matButton (click)="editOrder()" class="no-print">
     <mat-icon>edit</mat-icon> Editar orden
 </button>

@@ -1,6 +1,41 @@
-form {
+@use '../../../public/assets/scss/default' as d;
+
+.login {
+    display: flex;
+    width: 1024px;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100dvh;
+
+    @include d.tablet {
+        width: 700px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @include d.mobile {
+        width: 360px;
+    }
+
+    .left {
+        img {
+            width: 300px;
+            height: auto;
+            object-fit: contain;
+        }
+    }
+}
+
+.formLogin {
     display: flex;
     flex-direction: column;
-    width: 200px;
-    height: 400px;
+    width: 100%;
+    min-width: 400px;
+
+    @include d.mobile {
+        width: 100%;
+        min-width: 360px;
+        box-sizing: border-box;
+    }
 }
