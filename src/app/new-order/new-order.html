@@ -36,14 +36,18 @@
     <div class="formService">
         <form [formGroup]="formProduct">
             <mat-form-field>
-                <mat-label>Servicio</mat-label>
+                <mat-label>Código del servivio</mat-label>
                 <input #input type="text" placeholder="Servicio" matInput [formControlName]="'service'"
                     [matAutocomplete]="auto" (input)="filter()">
                 <mat-autocomplete requireSelection #auto="matAutocomplete">
                     @for(option of filteredOptions; track option){
-                    <mat-option [value]="option.service">{{option.service}}</mat-option>
+                    <mat-option [value]="option.id">{{option.service}} - {{option.brand}}</mat-option>
                     }
                 </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Servicio</mat-label>
+                <input matInput [value]="selectedOption() ? selectedOption()?.service : '' ">
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Marca</mat-label>
@@ -96,7 +100,7 @@
                 <th mat-header-cell *matHeaderCellDef> Subtotal </th>
                 <td mat-cell *matCellDef="let element"> {{element.price * element.qty | currency:'CLP':'$':'1.0-0'}}
                 </td>
-                <td mat-footer-cell *matFooterCellDef> {{10000 | currency:'CLP':'$':'1.0-0'}}</td>
+                <td mat-footer-cell *matFooterCellDef> {{getTotal() | currency:'CLP':'$':'1.0-0'}}</td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
@@ -108,7 +112,7 @@
                         Eliminar
                     </button>
                     } @else {
-                        <button matIconButton (click)="removeService(i)">
+                    <button matIconButton (click)="removeService(i)">
                         <mat-icon>delete</mat-icon>
                     </button>
                     }

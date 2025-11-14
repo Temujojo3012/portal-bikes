@@ -78,6 +78,7 @@ export class Bill implements OnInit, OnDestroy {
     this.firestoreService.addDoc('bills', this.orderData);
     this.firestoreService.updateDoc('orders', 'counters', { bill_number: this.orderData.orderNumber });
     this.router.navigate(['new-order']);
+    this.dataService.clearData();
     window.print();
   }
 
@@ -85,5 +86,13 @@ export class Bill implements OnInit, OnDestroy {
     this.orderData = { ...this.orderData, services: this.services };
     this.dataService.sendData(this.orderData);
     this.router.navigate(['new-order']);
+  }
+
+  getTotal(): number {
+    let total = 0;
+    this.services.forEach((service: any) => {
+      total += service.price * service.qty;
+    });
+    return total | 0;
   }
 }

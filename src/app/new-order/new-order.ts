@@ -17,6 +17,7 @@ export interface IServiceOption {
   service: string;
   brand: string;
   price: number;
+  id: string;
   qty?: number;
 }
 
@@ -135,7 +136,7 @@ export class NewOrder implements OnInit, OnDestroy {
     if (!this.options) {
       return undefined;
     }
-    let option = this.options.find(option => option.service === this.formProduct.value.service);
+    let option = this.options.find(option => option.id === this.formProduct.value.service);
     return option;
   }
 
@@ -143,7 +144,7 @@ export class NewOrder implements OnInit, OnDestroy {
     if (!this.formProduct.value.service) {
       return;
     }
-    let option = this.options.filter(option => option.service === this.formProduct.value.service);
+    let option = this.options.filter(option => option.id === this.formProduct.value.service);
     this.selectedOptions.push({ ...option[0], qty: this.formProduct.value.qty });
     this.formProduct.reset();
     this.table.renderRows();
@@ -163,5 +164,9 @@ export class NewOrder implements OnInit, OnDestroy {
     this.dataService.sendData(orderDetails);
 
     this.router.navigate(['/bill']);
+  }
+
+  public getTotal(): number {
+    return this.selectedOptions.reduce((acc, option) => acc + (option.price * (option.qty || 1)), 0);
   }
 }
