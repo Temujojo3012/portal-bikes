@@ -4,6 +4,9 @@
     </div>
     @if (!isMobile) {
     <div class="buttons">
+        <button matButton [routerLink]="'/services'">
+            <mat-icon>build</mat-icon> Servicios
+        </button>
         <button [routerLink]="'/new-order'" matButton>
             <mat-icon>assignment_add</mat-icon>Orden de trabajo
         </button>
@@ -16,12 +19,17 @@
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-        <button [routerLink]="'/new-order'" matButton>
-            <mat-icon>assignment_add</mat-icon>Orden de trabajo
-        </button>
-        <button matButton (click)="signOut()">
-            <mat-icon>logout</mat-icon> Cerrar sesión
-        </button>
+        <div class="menuMobile">
+            <button matButton [routerLink]="'/services'">
+                <mat-icon>build</mat-icon> Servicios
+            </button>
+            <button [routerLink]="'/new-order'" matButton>
+                <mat-icon>assignment_add</mat-icon>Orden de trabajo
+            </button>
+            <button matButton (click)="signOut()">
+                <mat-icon>logout</mat-icon> Cerrar sesión
+            </button>
+        </div>
     </mat-menu>
     }
 </mat-toolbar>

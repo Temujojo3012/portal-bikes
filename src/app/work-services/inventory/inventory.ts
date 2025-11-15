@@ -1,11 +1,11 @@
 import { Component, OnInit, HostListener, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { FirestoreService } from '../services/firestore.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { EditDialog } from '../shared/edit-dialog/edit-dialog';
-import { DeleteDialog } from '../shared/delete-dialog/delete-dlialog';
+import { EditDialog } from '../../shared/edit-dialog/edit-dialog';
+import { DeleteDialog } from '../../shared/delete-dialog/delete-dlialog';
 
 @Component({
   selector: 'app-inventory',

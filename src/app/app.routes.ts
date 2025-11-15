@@ -5,6 +5,7 @@ import { Login } from './login/login';
 import { authGuard } from './services/guard/auth-guard';
 import { Bill } from './bill/bill';
 import { NewOrder } from './new-order/new-order';
+import { WorkServices } from './work-services/work-services';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,10 @@ export const routes: Routes = [
     {
         path: 'bill',
         component: Bill
+    },
+    {
+        path: 'services',
+        component: WorkServices
     },
     {
         path: '**',

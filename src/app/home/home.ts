@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Inventory } from "../inventory/inventory";
-import { FormProducts } from "../form-products/form-products";
+import { ListBill } from '../list-bill/list-bill';
 
 @Component({
   selector: 'app-home',
-  imports: [Inventory, FormProducts],
+  imports: [ListBill],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
