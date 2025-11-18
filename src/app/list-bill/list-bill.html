@@ -1,1 +1,92 @@
-<p>list-bill works!</p>
+<h1>
+    Ordenes de trabajo
+</h1>
+<!--TODO: Agregar paginador-->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="orderNumber">
+        <th mat-header-cell *matHeaderCellDef>Orden</th>
+        <td mat-cell *matCellDef="let element"> <i>{{element.orderNumber}}</i></td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateBill">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let element">{{element.dateBill}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef> Datos del cliente </th>
+        <td mat-cell *matCellDef="let element">
+            <div>
+                <ul>
+                    <li>
+                        <i>Cliente:</i> {{element.name}}
+                    </li>
+                    <li>
+                        <i>Teléfono:</i> {{element.phone}}
+                    </li>
+                    <li>
+                        <i>E-mail:</i> {{element.email}}
+                    </li>
+                    <li>
+                        <i>Bicicleta:</i> {{element.bicycle}}
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="services">
+        <th mat-header-cell *matHeaderCellDef> Detalle</th>
+        <td mat-cell *matCellDef="let element">
+            <table class="tableDetails">
+                <tr>
+                    <th>Servicio</th>
+                    <th class="headUnitPrice">Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+                @for (service of element.services; track $index) {
+                <tr>
+                    <td class="displayService">
+                        {{service.service}}
+                    </td>
+                    <td class="displayNumbers">
+                        {{service.price | currency:'CLP':'$':'1.0-0'}}
+                    </td>
+                    <td class="displayNumbers">
+                        {{service.qty}}
+                    </td>
+                    <td class="displayNumbers">
+                        {{service.price * service.qty | currency:'CLP':'$':'1.0-0'}}
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="totalText">Total</td>
+                    <td class="displayNumbers">{{ getTotal(element.services) | currency:'CLP':'$':'1.0-0'}}</td>
+                </tr>
+            </table>
+        </td>
+    </ng-container>
+
+    <!--TODO: Revisar que acciones hacer con las facturas guardadas-->
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+            <button matButton>
+                <mat-icon>edit</mat-icon>
+                Editar
+            </button>
+            <button matButton>
+                <mat-icon>delete</mat-icon>
+                Eliminar
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

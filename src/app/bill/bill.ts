@@ -23,6 +23,7 @@ export class Bill implements OnInit, OnDestroy {
   private firestoreService: FirestoreService = inject(FirestoreService);
 
   public orderData = {
+    dateBill: '',
     orderNumber: 0,
     name: '',
     phone: '',
@@ -74,7 +75,7 @@ export class Bill implements OnInit, OnDestroy {
   }
 
   public print(): void {
-    this.orderData = { ...this.orderData, services: this.services };
+    this.orderData = { ...this.orderData, services: this.services, dateBill: this.date };
     this.firestoreService.addDoc('bills', this.orderData);
     this.firestoreService.updateDoc('orders', 'counters', { bill_number: this.orderData.orderNumber });
     this.router.navigate(['new-order']);
@@ -88,7 +89,7 @@ export class Bill implements OnInit, OnDestroy {
     this.router.navigate(['new-order']);
   }
 
-  getTotal(): number {
+  public getTotal(): number {
     let total = 0;
     this.services.forEach((service: any) => {
       total += service.price * service.qty;

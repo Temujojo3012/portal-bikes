@@ -1,0 +1,38 @@
+ul,
+li {
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+
+    i{
+        font-weight: 500;
+    }
+}
+
+.tableDetails {
+    min-width: 350px;
+    margin: 18px 0;
+
+    th,
+    .totalText {
+        font-weight: 500;
+        font-style: italic;
+    }
+
+    td,th{
+        padding: 0 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .displayService {
+        min-width: 160px;
+    }
+
+    .displayNumbers{
+        text-align: right;
+    }
+
+    .headUnitPrice {
+        min-width: 130px;
+    }
+}

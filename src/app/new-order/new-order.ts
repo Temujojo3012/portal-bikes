@@ -167,6 +167,10 @@ export class NewOrder implements OnInit, OnDestroy {
   }
 
   public getTotal(): number {
-    return this.selectedOptions.reduce((acc, option) => acc + (option.price * (option.qty || 1)), 0);
+    let total: number = 0
+    this.selectedOptions.forEach((option) => {
+      total += (option.price * (option.qty || 0));
+    });
+    return total;
   }
 }
